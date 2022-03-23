@@ -1,5 +1,6 @@
 package com.example.contactapp;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -19,10 +20,22 @@ public class Contact {
     @ColumnInfo
     private String email;
 
-    public Contact(String name, String mobile, String email) {
+    @ColumnInfo
+    private String avatar;
+
+    public Contact(String name, String mobile, String email, String avatar) {
         this.name = name;
         this.mobile = mobile;
         this.email = email;
+        this.avatar = avatar;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public int getId() {
@@ -55,5 +68,11 @@ public class Contact {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return id + " " + name + " " + mobile + " " + email + " " + avatar;
     }
 }
