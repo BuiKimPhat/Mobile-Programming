@@ -1,13 +1,21 @@
 package com.example.dogapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
+import com.example.dogapp.databinding.ActivityMainBinding;
 import com.example.dogapp.model.DogBreed;
+import com.example.dogapp.viewmodel.DogsAdapter;
 import com.example.dogapp.viewmodel.DogsApiService;
+import com.example.dogapp.viewmodel.MyViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -17,28 +25,28 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
-    private DogsApiService apiService;
+    private ActivityMainBinding binding;
+    private MyViewModel model;
+    private DogsAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View viewRoot = binding.getRoot();
+        setContentView(viewRoot);
 
-        apiService = new DogsApiService();
-        apiService.getDogs()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<List<DogBreed>>() {
-                    @Override
-                    public void onSuccess(@NonNull List<DogBreed> dogBreeds) {
-                        for (DogBreed dog: dogBreeds) {
-                            Log.d("DEBUG1", dog.getName());
-                        }
-                    }
+        model = new ViewModelProvider(this).get(MyViewModel.class);
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                            Log.d("DEBUG1", e.getMessage());
-                    }
-                });
+        adapter = new DogsAdapter(new ArrayList<DogBreed>());
+
+        model.getDogBreeds().observe(this, new Observer<ArrayList<DogBreed>>() {
+            @Override
+            public void onChanged(ArrayList<DogBreed> dogBreeds) {
+                adapter = new DogsAdapter(dogBreeds);
+                binding.rvDogBreeds.setAdapter(adapter);
+                binding.rvDogBreeds.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+            }
+        });
     }
 }

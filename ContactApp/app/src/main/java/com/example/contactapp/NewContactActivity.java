@@ -9,7 +9,10 @@ import android.app.Activity;
 import android.content.Intent;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -88,6 +91,7 @@ public class NewContactActivity extends AppCompatActivity {
                 startActivityForResult(photoPickerIntent, 123);
             }
         });
+
     }
 
     @Override
@@ -95,6 +99,9 @@ public class NewContactActivity extends AppCompatActivity {
         super.onActivityResult(reqCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             final Uri imageUri = data.getData();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                getApplicationContext().getContentResolver().takePersistableUriPermission(imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            }
             model.updateAvatar(imageUri.toString());
         } else {
             Toast.makeText(NewContactActivity.this, "Bạn chưa chọn ảnh",Toast.LENGTH_LONG).show();
