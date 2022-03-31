@@ -26,8 +26,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private MyViewModel model;
-    private DogsAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +34,5 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View viewRoot = binding.getRoot();
         setContentView(viewRoot);
-
-        model = new ViewModelProvider(this).get(MyViewModel.class);
-
-        adapter = new DogsAdapter(new ArrayList<DogBreed>());
-
-        model.getDogBreeds().observe(this, new Observer<ArrayList<DogBreed>>() {
-            @Override
-            public void onChanged(ArrayList<DogBreed> dogBreeds) {
-                adapter = new DogsAdapter(dogBreeds);
-                binding.rvDogBreeds.setAdapter(adapter);
-                binding.rvDogBreeds.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-            }
-        });
     }
 }

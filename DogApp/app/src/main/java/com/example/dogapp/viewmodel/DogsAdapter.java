@@ -1,5 +1,6 @@
 package com.example.dogapp.viewmodel;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dogapp.R;
@@ -53,7 +55,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
         return dogBreeds.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView ivThumbnail;
         public TextView tvName;
@@ -64,6 +66,16 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
             ivThumbnail = itemView.findViewById(R.id.iv_thumbnail);
             tvName = itemView.findViewById(R.id.tv_name);
             tvDescription = itemView.findViewById(R.id.tv_description);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            DogBreed dogBreed = dogBreeds.get(getAdapterPosition());
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("dogBreed", dogBreed);
+            Navigation.findNavController(itemView).navigate(R.id.detailsFragment);
         }
     }
 }
