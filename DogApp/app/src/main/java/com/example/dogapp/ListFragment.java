@@ -7,6 +7,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +48,20 @@ public class ListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentListBinding.inflate(getLayoutInflater());
+        binding.etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter = new DogsAdapter(model.searchDogs(binding.etSearch.getText().toString()));
+                binding.rvDogBreeds.setAdapter(adapter);
+                binding.rvDogBreeds.setLayoutManager(new GridLayoutManager(ListFragment.this.getContext(), 2));
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
         View viewRoot = binding.getRoot();
         return viewRoot;
     }

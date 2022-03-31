@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dogapp.R;
@@ -55,6 +56,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
         return dogBreeds.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView ivThumbnail;
@@ -75,7 +77,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
             DogBreed dogBreed = dogBreeds.get(getAdapterPosition());
             Bundle bundle = new Bundle();
             bundle.putSerializable("dogBreed", dogBreed);
-            Navigation.findNavController(itemView).navigate(R.id.detailsFragment);
+            Navigation.findNavController(itemView).navigate(R.id.detailsFragment, bundle);
         }
     }
 }

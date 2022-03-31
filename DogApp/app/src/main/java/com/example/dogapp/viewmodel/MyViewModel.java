@@ -44,4 +44,13 @@ public class MyViewModel extends ViewModel {
                     }
                 });
     }
+
+    public ArrayList<DogBreed> searchDogs(String name){
+        ArrayList<DogBreed> res = new ArrayList<>();
+        for (DogBreed dog: dogBreeds.getValue()) {
+            if (dog.getName().toLowerCase().contains(name.toLowerCase()))
+                res.add(dog);
+        }
+        return res;
+    }
 }
