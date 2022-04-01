@@ -12,6 +12,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.example.dogapp.R;
 import com.example.dogapp.model.DogBreed;
 import com.squareup.picasso.Picasso;
@@ -19,6 +21,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
+
+    // This object helps you save/restore the open/close state of each view
+    private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
     private ArrayList<DogBreed> dogBreeds;
 
@@ -49,6 +54,8 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
             else description += description += origin;
         }
         holder.tvDescription.setText(description);
+
+        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(dogBreeds.get(position).getId()));
     }
 
     @Override
@@ -62,12 +69,14 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
         public ImageView ivThumbnail;
         public TextView tvName;
         public TextView tvDescription;
+        public SwipeRevealLayout swipeRevealLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivThumbnail = itemView.findViewById(R.id.iv_thumbnail);
             tvName = itemView.findViewById(R.id.tv_name);
             tvDescription = itemView.findViewById(R.id.tv_description);
+            swipeRevealLayout = itemView.findViewById(R.id.swipe_layout);
 
             itemView.setOnClickListener(this);
         }
