@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,9 +22,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
-
-    // This object helps you save/restore the open/close state of each view
-    private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
     private ArrayList<DogBreed> dogBreeds;
 
@@ -55,7 +53,9 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
         }
         holder.tvDescription.setText(description);
 
-        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(dogBreeds.get(position).getId()));
+        holder.tvName2.setText(dogBreeds.get(position).getName());
+        holder.tvOrigin.setText(dogBreeds.get(position).getOrigin());
+        holder.tvLifeSpan.setText(dogBreeds.get(position).getLifeSpan());
     }
 
     @Override
@@ -64,12 +64,16 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView ivThumbnail;
         public TextView tvName;
         public TextView tvDescription;
         public SwipeRevealLayout swipeRevealLayout;
+        public TextView tvName2;
+        public TextView tvOrigin;
+        public TextView tvLifeSpan;
+        private LinearLayout topWrapper;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,16 +81,20 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
             tvName = itemView.findViewById(R.id.tv_name);
             tvDescription = itemView.findViewById(R.id.tv_description);
             swipeRevealLayout = itemView.findViewById(R.id.swipe_layout);
+            tvName2 = itemView.findViewById(R.id.tv_name_2);
+            tvOrigin = itemView.findViewById(R.id.tv_origin);
+            tvLifeSpan = itemView.findViewById(R.id.tv_life_span);
+            topWrapper = itemView.findViewById(R.id.top_wrapper);
 
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            DogBreed dogBreed = dogBreeds.get(getAdapterPosition());
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("dogBreed", dogBreed);
-            Navigation.findNavController(itemView).navigate(R.id.detailsFragment, bundle);
+            topWrapper.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DogBreed dogBreed = dogBreeds.get(getAdapterPosition());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("dogBreed", dogBreed);
+                    Navigation.findNavController(itemView).navigate(R.id.detailsFragment, bundle);
+                }
+            });
         }
     }
 }

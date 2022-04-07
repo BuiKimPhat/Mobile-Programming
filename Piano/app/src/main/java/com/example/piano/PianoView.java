@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -18,6 +19,8 @@ public class PianoView extends View {
     private Paint black, white, green, blackStroke;
     private ArrayList<Key> blacks, whites;
     private int keyWidth, keyHeight;
+
+    private SoundManager soundManager;
 
     public PianoView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -87,20 +90,110 @@ public class PianoView extends View {
             float y = event.getY(touchIndex);
 
             for (Key k:whites){
-                for (Key kb:blacks){
-                    if (k.rect.contains(x,y) && !kb.rect.contains(x,y)){
-                        k.isDown = isDownAction;
-                    } else {
-                        k.isDown = false;
+                boolean bPress = false;
+                int keySound = 0;
+                if (k.rect.contains(x,y)){
+                    for (Key kb:blacks){
+                        if (kb.rect.contains(x,y)) {
+                            bPress = true;
+                            keySound = kb.sound;
+                            kb.isDown = isDownAction;
+                        } else {
+                            kb.isDown = false;
+                        }
                     }
+                    if (bPress) k.isDown = false;
+                    else {
+                        keySound = k.sound;
+                        k.isDown = isDownAction;
+                    }
+                } else {
+                    k.isDown = false;
                 }
             }
         }
 
-        soundManager.playsound(R.raw.d3);
-
         invalidate();
 
         return true;
+    }
+
+    private void keyPlaySound(int keySound){
+        switch (keySound) {
+            case 1:
+                soundManager.playSound(R.raw.c2);
+                break;
+            case 2:
+                soundManager.playSound(R.raw.d2);
+                break;
+            case 3:
+                soundManager.playSound(R.raw.e2);
+                break;
+            case 4:
+                soundManager.playSound(R.raw.f2);
+                break;
+            case 5:
+                soundManager.playSound(R.raw.g2);
+                break;
+            case 6:
+                soundManager.playSound(R.raw.a2);
+                break;
+            case 7:
+                soundManager.playSound(R.raw.b2);
+                break;
+            case 8:
+                soundManager.playSound(R.raw.c3);
+                break;
+            case 9:
+                soundManager.playSound(R.raw.d3);
+                break;
+            case 10:
+                soundManager.playSound(R.raw.e3);
+                break;
+            case 11:
+                soundManager.playSound(R.raw.f3);
+                break;
+            case 12:
+                soundManager.playSound(R.raw.g3);
+                break;
+            case 13:
+                soundManager.playSound(R.raw.a3);
+                break;
+            case 14:
+                soundManager.playSound(R.raw.b3);
+                break;
+            case 15:
+                soundManager.playSound(R.raw.db2);
+                break;
+            case 16:
+                soundManager.playSound(R.raw.eb2);
+                break;
+            case 17:
+                soundManager.playSound(R.raw.gb2);
+                break;
+            case 18:
+                soundManager.playSound(R.raw.ab2);
+                break;
+            case 19:
+                soundManager.playSound(R.raw.bb2);
+                break;
+            case 20:
+                soundManager.playSound(R.raw.db3);
+                break;
+            case 21:
+                soundManager.playSound(R.raw.eb3);
+                break;
+            case 22:
+                soundManager.playSound(R.raw.gb3);
+                break;
+            case 23:
+                soundManager.playSound(R.raw.ab3);
+                break;
+            case 24:
+                soundManager.playSound(R.raw.bb3);
+                break;
+            default:
+                break;
+        }
     }
 }
