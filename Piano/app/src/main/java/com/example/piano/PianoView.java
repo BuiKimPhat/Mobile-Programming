@@ -25,6 +25,9 @@ public class PianoView extends View {
     public PianoView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
+        soundManager = new SoundManager();
+        soundManager.init(context);
+
         black = new Paint();
         black.setColor(Color.BLACK);
         black.setStyle(Paint.Style.FILL);
@@ -112,6 +115,7 @@ public class PianoView extends View {
                 }
             }
         }
+        keyPlaySound(1);
 
         invalidate();
 
