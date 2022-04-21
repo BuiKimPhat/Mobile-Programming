@@ -25,7 +25,6 @@ public class DetailsFragment extends Fragment {
         Picasso.get().load(url).into(view);
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

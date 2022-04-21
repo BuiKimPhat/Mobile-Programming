@@ -40,6 +40,9 @@ public class PianoView extends View {
 
         blacks = new ArrayList<Key>();
         whites = new ArrayList<Key>();
+
+        soundManager = SoundManager.getInstance();
+        soundManager.init(context);
     }
 
     @Override
@@ -91,7 +94,7 @@ public class PianoView extends View {
 
             for (Key k:whites){
                 boolean bPress = false;
-                int keySound = 0;
+                int keySound = k.sound;
                 if (k.rect.contains(x,y)){
                     for (Key kb:blacks){
                         if (kb.rect.contains(x,y)) {
@@ -107,6 +110,7 @@ public class PianoView extends View {
                         keySound = k.sound;
                         k.isDown = isDownAction;
                     }
+                    if (isDownAction) keyPlaySound(keySound);
                 } else {
                     k.isDown = false;
                 }
