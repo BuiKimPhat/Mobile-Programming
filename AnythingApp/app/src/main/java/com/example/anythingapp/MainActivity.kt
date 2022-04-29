@@ -70,7 +70,6 @@ fun Navigation(navController: NavHostController){
 fun TopBar(){
     TopAppBar(
     ) {
-
     }
 }
 
