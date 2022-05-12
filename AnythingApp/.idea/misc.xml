@@ -3,11 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/School/Mobile Programming/AnythingApp/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.111" />
+        <entry key="..\:/School/Mobile Programming/AnythingApp/app/src/main/res/drawable/ic_baseline_attach_money_24.xml" value="0.111" />
         <entry key="..\:/School/Mobile Programming/AnythingApp/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.121" />
         <entry key="..\:/School/Mobile Programming/AnythingApp/app/src/main/res/drawable/ic_baseline_menu_book_24.xml" value="0.121" />
         <entry key="..\:/School/Mobile Programming/AnythingApp/app/src/main/res/drawable/ic_baseline_movie_24.xml" value="0.121" />
         <entry key="..\:/School/Mobile Programming/AnythingApp/app/src/main/res/drawable/ic_baseline_music_note_24.xml" value="0.121" />
         <entry key="..\:/School/Mobile Programming/AnythingApp/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.121" />
+        <entry key="..\:/School/Mobile Programming/AnythingApp/app/src/main/res/drawable/ic_baseline_remove_24.xml" value="0.111" />
       </map>
     </option>
   </component>

@@ -28,8 +28,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AnythingAppTheme {
-                // A surface container using the 'background' color from the theme
-
                 val navController = rememberNavController()
 
                 Scaffold(
@@ -57,20 +55,18 @@ fun Navigation(navController: NavHostController){
         composable(NavigationItem.Movie.route){
             MovieScreen()
         }
-        composable(NavigationItem.Book.route){
-            BookScreen()
+        composable(NavigationItem.Tip.route){
+            TipScreen()
         }
-        composable(NavigationItem.Profile.route){
-            ProfileScreen()
+        composable(NavigationItem.Portfolio.route){
+            PortfolioScreen()
         }
     }
 }
 
 @Composable
 fun TopBar(){
-    TopAppBar(
-    ) {
-    }
+    TopAppBar(title = { Text(text = "My anything app", color = Color.White) }, backgroundColor = colorResource(id = R.color.colorPrimary))
 }
 
 @Composable
@@ -79,8 +75,8 @@ fun BottomNavigation(navController: NavHostController){
         NavigationItem.Home,
         NavigationItem.Music,
         NavigationItem.Movie,
-        NavigationItem.Book,
-        NavigationItem.Profile,
+        NavigationItem.Tip,
+        NavigationItem.Portfolio,
     )
 
     androidx.compose.material.BottomNavigation(
